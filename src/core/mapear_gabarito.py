@@ -79,7 +79,7 @@ def gerar_mapa_coordenadas(imagem_template_caminho):
             dist_y = abs(y1 - y2)
             dist_x = abs(x1 - x2)
             
-            if dist_y <= 8 and 18 <= dist_x <= 35:
+            if dist_y <= 9 and 18 <= dist_x <= 35:
                 tem_vizinho = True
                 break
                 
@@ -143,4 +143,4 @@ def gerar_mapa_coordenadas(imagem_template_caminho):
     print("\n[SUCESSO] O arquivo 'gabarito_coordenadas.json' foi gerado com sucesso!")
 
 if __name__ == '__main__':
-    gerar_mapa_coordenadas('templateFinal.png')
+    gerar_mapa_coordenadas('images/templateFinal.png')
