@@ -15,8 +15,8 @@ template_dia2 = cv2.imread('images/templateFinal.png')
 
 def verificar_erros(respostas_aluno, gabarito_oficial):
     
-    
-    
+
+     
     questoes_erradas = []
     offset = 90
         
@@ -33,14 +33,14 @@ def verificar_erros(respostas_aluno, gabarito_oficial):
     return len(questoes_erradas), questoes_erradas
 @app.post("/corrigir-prova")
 async def corrigir_prova_endpoint(
-    imagem: UploadFile = File(...),
+    image: UploadFile = File(...),
     pdf: UploadFile = File(...),
-    dia: int = Form(...)
+    day: int = Form(...)
 ) :
-    print(f"Recebendo arquivos: {imagem.filename} e {pdf.filename}")
-    if dia not in [1, 2]:
+    print(f"Recebendo arquivos: {image.filename} e {pdf.filename}")
+    if day not in [1, 2]:
         raise HTTPException(status_code=400, detail="O campo 'dia' deve ser 1 ou 2.")
-    if dia == 1:
+    if day == 1:
         template_referencia = template_dia1
     
     else:
@@ -54,7 +54,7 @@ async def corrigir_prova_endpoint(
     with open(caminho_pdf_temp, "wb") as buffer:
         shutil.copyfileobj(pdf.file, buffer)
 
-    contents = await imagem.read()
+    contents = await image.read()
     nparr = np.frombuffer(contents, np.uint8)
     imagem_torta = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
@@ -70,10 +70,10 @@ async def corrigir_prova_endpoint(
         gabarito_oficial = extrair_gabarito(caminho_pdf_temp)
         img_alinhada = alinhar_por_template(imagem_torta, template_referencia)
         
-        if (dia == 1): 
-            respostas_aluno = ler_prova(img_alinhada, 'gabarito_coordenadasDia1.json')
+        if (day == 1): 
+            respostas_aluno = ler_prova(img_alinhada, 'gabarito_coordenadas_dia_1_3.json', 1)
         else: 
-            respostas_aluno = ler_prova(img_alinhada, 'gabarito_coordenadas.json')
+            respostas_aluno = ler_prova(img_alinhada, 'gabarito_coordenadas_dia_2_3.json', 2)
         os.remove(caminho_pdf_temp)
         return {
             "sucesso": True,

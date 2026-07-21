@@ -137,7 +137,7 @@ def gerar_mapa_coordenadas(imagem_template_caminho):
                         "h": bh / altura_total
                     }
                 
-    with open("gabarito_coordenadas.json", "w") as f:
+    with open("gabarito_coordenadas_dia_2_3.json", "w") as f:
         json.dump(gabarito_mapa, f, indent=4)
         
     print("\n[SUCESSO] O arquivo 'gabarito_coordenadas.json' foi gerado com sucesso!")

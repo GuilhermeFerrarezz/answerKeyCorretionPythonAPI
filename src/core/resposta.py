@@ -2,7 +2,7 @@ import cv2
 import json
 import numpy as np
 
-def ler_prova(img, caminho_json):
+def ler_prova(img, caminho_json, day):
     if img is None:
         print("Erro: Imagem não encontrada!")
         return {}
@@ -60,12 +60,18 @@ def ler_prova(img, caminho_json):
             selecao = max(pontuacoes, key=pontuacoes.get)
             estado = "MARCADA"
 
-        
-        respostas[q] = {
+        if int(day) == 2: 
+            numero_questao = str(int(q) + 90)
+        else:
+            numero_questao = q
+            
+        respostas[numero_questao] = {
             "estado": estado,
             "selecao": selecao,
             "densidades": pontuacoes
         }
+            
+        
         respostas_simple[q] = selecao
             
 
@@ -75,5 +81,5 @@ def ler_prova(img, caminho_json):
     return respostas
 
 if __name__ == "__main__":
-    resultado = ler_prova("3_alinhada_por_template.jpg", "gabarito_coordenadas.json")
+    resultado = ler_prova("3_alinhada_por_template.jpg", "gabarito_coordenadas.json", 1)
     print(json.dumps(resultado, indent=4))
