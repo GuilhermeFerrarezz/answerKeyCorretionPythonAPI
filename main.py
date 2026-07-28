@@ -35,7 +35,8 @@ def verificar_erros(respostas_aluno, gabarito_oficial):
 async def corrigir_prova_endpoint(
     image: UploadFile = File(...),
     pdf: UploadFile = File(...),
-    day: int = Form(...)
+    day: int = Form(...),
+    idioma: str= Form(...)
 ) :
     print(f"Recebendo arquivos: {image.filename} e {pdf.filename}")
     if day not in [1, 2]:
@@ -67,7 +68,7 @@ async def corrigir_prova_endpoint(
         raise HTTPException(status_code=500, detail="Erro no servidor: Template de referência não encontrado.")
     
     try: 
-        gabarito_oficial = extrair_gabarito(caminho_pdf_temp)
+        gabarito_oficial = extrair_gabarito(caminho_pdf_temp, idioma)
         img_alinhada = alinhar_por_template(imagem_torta, template_referencia)
         
         if (day == 1): 
@@ -75,13 +76,17 @@ async def corrigir_prova_endpoint(
         else: 
             respostas_aluno = ler_prova(img_alinhada, 'gabarito_coordenadas_dia_2_3.json', 2)
         os.remove(caminho_pdf_temp)
-        return {
-            "sucesso": True,
-            "resumo": {
-                "gabarito": gabarito_oficial,
-                "respostas": respostas_aluno
+        if respostas_aluno and gabarito_oficial: 
+            return {
+                "sucesso": True,
+                "resumo": {
+                    "gabarito": gabarito_oficial,
+                    "respostas": respostas_aluno
+                }
             }
-        }
+        else:
+            raise HTTPException(status_code=500, detail="Erro no servidor: Não foi possível ler o gabarito.")
+        
     except Exception as e:
         if os.path.exists(caminho_pdf_temp): os.remove(caminho_pdf_temp)
         if os.path.exists("temp_alinhada.jpg"): os.remove("temp_alinhada.jpg")
@@ -120,7 +125,7 @@ nome_do_arquivo = "gabaritoMarco2Dia.pdf"
 
 print(f"Lendo o arquivo: {nome_do_arquivo}\n")
         
-resultado = extrair_gabarito(nome_do_arquivo)
+resultado = extrair_gabarito(nome_do_arquivo, 'ingles')
     
 img_alinhada = alinhar_por_template(imagem_torta, template_referencia)
 cv2.imwrite(arquivo_alinhado, img_alinhada)

@@ -72,13 +72,13 @@ def ler_prova(img, caminho_json, day):
         }
             
         
-        respostas_simple[q] = selecao
+        respostas_simple[numero_questao] = selecao
             
 
     cv2.imwrite("debug_leitura.jpg", img_debug)
     print("Imagem de debug salva como 'debug_leitura.jpg'")
             
-    return respostas
+    return respostas_simple
 
 if __name__ == "__main__":
     resultado = ler_prova("3_alinhada_por_template.jpg", "gabarito_coordenadas.json", 1)
