@@ -9,7 +9,7 @@ def gerar_mapa_coordenadas(imagem_template_caminho):
         print(f"Erro: Não foi possível carregar a imagem em: {imagem_template_caminho}")
         return
 
-    # 2. Padronizar largura (1200px)
+   
     largura_padrao = 1200
     proporcao = largura_padrao / float(template.shape[1])
     altura_padrao = int(template.shape[0] * proporcao)
@@ -140,7 +140,7 @@ def gerar_mapa_coordenadas(imagem_template_caminho):
     with open("gabarito_coordenadas_dia_2_3.json", "w") as f:
         json.dump(gabarito_mapa, f, indent=4)
         
-    print("\n[SUCESSO] O arquivo 'gabarito_coordenadas.json' foi gerado com sucesso!")
+    #print("\n[SUCESSO] O arquivo 'gabarito_coordenadas.json' foi gerado com sucesso!")
 
 if __name__ == '__main__':
     gerar_mapa_coordenadas('images/templateFinal.png')

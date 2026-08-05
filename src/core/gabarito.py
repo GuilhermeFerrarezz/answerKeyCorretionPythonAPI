@@ -39,9 +39,9 @@ def extrair_gabarito(caminho_pdf, idioma_escolhido):
                                 
         return gabarito
     except FileNotFoundError:
-        print(f"Erro: O aquivo '{caminho_pdf}' não foi encontrado")
+        #print(f"Erro: O aquivo '{caminho_pdf}' não foi encontrado")
         return None
     except Exception as e:
-        print(f"Erro inesperado ao ler o PDF: {e}")
+        #print(f"Erro inesperado ao ler o PDF: {e}")
         return None
     

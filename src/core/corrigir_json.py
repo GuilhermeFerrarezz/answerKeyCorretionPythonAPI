@@ -25,5 +25,5 @@ for q in range(76, 91):
 with open(arquivo_saida, 'w') as f:
     json.dump(mapa, f, indent=4)
 
-print(f"✅ Sucesso! As coordenadas X das questões 76 a 90 foram deslocadas em +{offset_x}.")
-print(f"Novo arquivo salvo como: {arquivo_saida}")
+#print(f"✅ Sucesso! As coordenadas X das questões 76 a 90 foram deslocadas em +{offset_x}.")
+#print(f"Novo arquivo salvo como: {arquivo_saida}")

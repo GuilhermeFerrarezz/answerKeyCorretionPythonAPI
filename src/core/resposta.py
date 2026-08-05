@@ -76,7 +76,7 @@ def ler_prova(img, caminho_json, day):
             
 
     cv2.imwrite("debug_leitura.jpg", img_debug)
-    print("Imagem de debug salva como 'debug_leitura.jpg'")
+    #print("Imagem de debug salva como 'debug_leitura.jpg'")
             
     return respostas_simple
 

@@ -12,25 +12,6 @@ app = FastAPI(title="API de Correção de Provas")
 template_dia1 = cv2.imread('images/templateFinalDia1.png')
 template_dia2 = cv2.imread('images/templateFinal.png')
 
-
-def verificar_erros(respostas_aluno, gabarito_oficial):
-    
-
-     
-    questoes_erradas = []
-    offset = 90
-        
-    for questao_oficial, correta in gabarito_oficial.items():
-       
-        q_num = int(questao_oficial)
-        q_aluno = str(q_num - offset)
-            
-        aluno = respostas_aluno.get(q_aluno, {}).get('selecao')
-            
-        if aluno != correta:
-            questoes_erradas.append(questao_oficial) 
-                
-    return len(questoes_erradas), questoes_erradas
 @app.post("/corrigir-prova")
 async def corrigir_prova_endpoint(
     image: UploadFile = File(...),
@@ -96,14 +77,7 @@ if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
-    
 
-    
-
-    
-    
-    
-    
     
 print("Iniciando extração...")
 nome_do_arquivo = "gabaritoMarco2Dia.pdf"
@@ -136,9 +110,5 @@ respostas = ler_prova(arquivo_alinhado, 'gabarito_coordenadas.json')
 print(resultado)
 print(respostas)
     
-total, quais = verificar_erros(respostas, resultado)
-
-print(f"Você errou {total} questões.")
-print(f"As questões que você errou foram: {quais}")
  
     

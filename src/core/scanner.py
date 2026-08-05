@@ -36,7 +36,7 @@ def alinhar_por_template(imagem_torta, imagem_template, max_features=5000):
         raise ValueError("A imagem enviada não parece ser um gabarito válido (Padrão não reconhecido).")
     
     inliers = np.sum(mascara)
-    print(f"[DEBUG] Pontos únicos de alinhamento perfeito encontrados: {inliers}")
+    #print(f"[DEBUG] Pontos únicos de alinhamento perfeito encontrados: {inliers}")
     
     if inliers < 40: 
         raise ValueError(f"Imagem rejeitada. Não foram encontrados pontos de referência únicos suficientes ({inliers}). Envie uma foto clara.")
